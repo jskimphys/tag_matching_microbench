@@ -10,7 +10,9 @@
 #include <unordered_map>
 #include <vector>
 
-int query_size = 10000;
+int query_size = 10'000;
+int container_size = 5'000'000;
+uint64_t max_value = 100'000'000;
 
 using namespace std;
 
@@ -26,9 +28,9 @@ int main() {
   std::mt19937 gen(rd());
   // do not overlap
 
-  uniform_int_distribution<uint64_t> dis(0, 100'000'000);
-  std::vector<uint64_t> data(5'000'000);
-  for (int i = 0; i < 5'000'000; i++) {
+  uniform_int_distribution<uint64_t> dis(0, max_value);
+  std::vector<uint64_t> data(container_size);
+  for (int i = 0; i < container_size; i++) {
     data[i] = dis(gen);
   }
 
@@ -42,7 +44,7 @@ int main() {
   // =======================
   // unordered_map
   std::unordered_map<uint64_t, uint64_t> m_tags_umap;
-  for (int i = 0; i < 5'000'000; i++) {
+  for (int i = 0; i < container_size; i++) {
     m_tags_umap[data[i]] = data[i];
   }
 
@@ -90,7 +92,7 @@ int main() {
 
   // map
   std::map<uint64_t, uint64_t> m_tags_map;
-  for (int i = 0; i < 5'000'000; i++) {
+  for (int i = 0; i < container_size; i++) {
     m_tags_map[data[i]] = data[i];
   }
 
